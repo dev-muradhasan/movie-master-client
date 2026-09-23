@@ -59,7 +59,7 @@ const Register = () => {
                 <div className="relative hidden w-1/2 lg:block">
 
                     <img
-                        src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1200&q=85"
+                        src="https://res.cloudinary.com/iw6hgjqb/image/upload/f_auto/q_auto/rvmkzdzuzxla0qg82zsa"
                         alt="Movie theater"
                         className="absolute inset-0 h-full w-full object-cover"
                     />
@@ -102,8 +102,8 @@ const Register = () => {
 
                             <div className="mb-4 flex items-center gap-3 lg:hidden">
 
-                                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-500 text-white">
-                                    <FaFilm />
+                                <div className="h-11 w-11 rounded-xl">
+                                    <img src="/favicon.png" alt="Logo" />
                                 </div>
 
                                 <h2 className="text-xl font-bold text-white">

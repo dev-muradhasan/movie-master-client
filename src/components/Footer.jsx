@@ -19,7 +19,7 @@ const Footer = () => {
                         {/* <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-500 text-white">
                             <FaFilm />
                         </div> */}
-                        <div className="flex h-11 w-11 rounded-xl">
+                        <div className="h-11 w-11 rounded-xl">
                             <img src="/favicon.png" alt="Logo" />
                         </div>
 

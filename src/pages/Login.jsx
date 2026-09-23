@@ -1,7 +1,34 @@
-import { FaGoogle, FaFilm, FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router";
+import { use } from "react";
+import { FaGoogle, FaEnvelope, FaLock } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router";
+import AuthContext from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+    const location = useLocation();
+    const from = location.state || '/';
+    const navigate = useNavigate();
+    const { signInUserWithEmailPass, setUser ,setLoading} = use(AuthContext)
+
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        signInUserWithEmailPass(email, password)
+            .then((res)=>{
+                setLoading(false)
+                toast.success("Sign In Successful!");
+                setUser(res.user)
+                navigate(from)
+                console.log(res.user);
+            })
+            .catch((err) => {
+                console.log(err);
+                toast.error(err.message);
+            });
+    }
+
     return (
         <div className="min-h-screen bg-slate-950 px-4 py-10">
             <div className="mx-auto flex min-h-175 max-w-6xl overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl">
@@ -18,7 +45,7 @@ const Login = () => {
 
                     <div className="relative flex h-full flex-col justify-end p-10">
 
-                        <div className="mb-5 flex h-14 w-14 rounded-2xl">
+                        <div className="mb-5 h-14 w-14 rounded-2xl">
                             <img src="/favicon.png" alt="Logo" />
                         </div>
 
@@ -45,8 +72,8 @@ const Login = () => {
                         {/* Mobile Logo */}
                         <div className="mb-7 lg:hidden">
                             <div className="mb-4 flex items-center gap-3">
-                                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-500 text-white">
-                                    <FaFilm />
+                                <div className="h-11 w-11 rounded-xl">
+                                    <img src="/favicon.png" alt="Logo" />
                                 </div>
 
                                 <h2 className="text-xl font-bold text-white">
@@ -70,7 +97,7 @@ const Login = () => {
                         </div>
 
                         {/* Form */}
-                        <form className="space-y-5">
+                        <form onSubmit={handleSignIn} className="space-y-5">
 
                             {/* Email */}
                             <div>
@@ -83,6 +110,7 @@ const Login = () => {
 
                                     <input
                                         type="email"
+                                        name="email"
                                         placeholder="you@example.com"
                                         className="input h-12 w-full border-slate-700 bg-slate-950 pl-11 text-white placeholder:text-slate-600 outline-none focus:border-pink-500"
                                     />
@@ -111,6 +139,7 @@ const Login = () => {
 
                                     <input
                                         type="password"
+                                        name="password"
                                         placeholder="••••••••"
                                         className="input h-12 w-full border-slate-700 bg-slate-950 pl-11 text-white placeholder:text-slate-600 outline-none focus:border-pink-500"
                                     />

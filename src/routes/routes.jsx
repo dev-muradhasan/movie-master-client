@@ -14,7 +14,7 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ErrorPage from "../pages/ErrorPage";
 
-const Router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,
@@ -74,4 +74,4 @@ const Router = createBrowserRouter([
     },
 ]);
 
-export default Router;
+export default router;
