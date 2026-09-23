@@ -13,6 +13,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ErrorPage from "../pages/ErrorPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
     {
@@ -31,31 +32,50 @@ const router = createBrowserRouter([
                 Component: Movies,
             },
 
+            // PUBLIC
             {
                 path: "/movies/:id",
                 Component: MovieDetails,
             },
 
+            // PRIVATE
             {
                 path: "/movies/add",
-                Component: AddMovie,
+                element: (
+                    <PrivateRoutes>
+                        <AddMovie />
+                    </PrivateRoutes>
+                ),
             },
 
             {
                 path: "/movies/update/:id",
-                Component: UpdateMovie,
+                element: (
+                    <PrivateRoutes>
+                        <UpdateMovie />
+                    </PrivateRoutes>
+                ),
             },
 
             {
                 path: "/my-collection",
-                Component: MyCollection,
+                element: (
+                    <PrivateRoutes>
+                        <MyCollection />
+                    </PrivateRoutes>
+                ),
             },
 
             {
                 path: "/watchlist",
-                Component: Watchlist,
+                element: (
+                    <PrivateRoutes>
+                        <Watchlist />
+                    </PrivateRoutes>
+                ),
             },
 
+            // PUBLIC
             {
                 path: "/login",
                 Component: Login,

@@ -7,8 +7,8 @@ const NotFound = () => {
 
             <div className="text-center">
 
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-pink-500/10 text-5xl text-pink-500">
-                    <FaFilm />
+                <div className="mx-auto h-24 w-24 rounded-3xl">
+                    <img src="/favicon.png" alt="Logo" />
                 </div>
 
                 <h1 className="mt-8 text-8xl font-black text-white">
