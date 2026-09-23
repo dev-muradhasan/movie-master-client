@@ -34,7 +34,7 @@ const Navbar = () => {
         }`;
 
     return (
-        <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/60 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur-xl">
 
             <div className="mx-auto max-w-7xl px-4">
 
@@ -44,8 +44,11 @@ const Navbar = () => {
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-3">
 
-                        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-pink-500 text-white shadow-lg shadow-pink-500/20 lg:h-11 lg:w-11">
+                        {/* <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-pink-500 text-white shadow-lg shadow-pink-500/20 lg:h-11 lg:w-11">
                             <FaFilm size={20} />
+                        </div> */} 
+                        <div className="flex h-8 w-8 lg:h-11 lg:w-11 rounded-xl">
+                            <img src="/favicon.png" alt="Logo" />
                         </div>
 
                         <div>

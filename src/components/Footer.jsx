@@ -16,8 +16,11 @@ const Footer = () => {
                 {/* Logo */}
                 <div>
                     <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-500 text-white">
+                        {/* <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-500 text-white">
                             <FaFilm />
+                        </div> */}
+                        <div className="flex h-11 w-11 rounded-xl">
+                            <img src="/favicon.png" alt="Logo" />
                         </div>
 
                         <h2 className="text-xl font-bold text-white">
@@ -60,7 +63,7 @@ const Footer = () => {
                         <Link className="hover:text-pink-500" to="/watchlist">
                             Watchlist
                         </Link>
-                        <Link className="hover:text-pink-500" to="/movies/my-collection">
+                        <Link className="hover:text-pink-500" to="/my-collection">
                             My Collection
                         </Link>
                     </div>
