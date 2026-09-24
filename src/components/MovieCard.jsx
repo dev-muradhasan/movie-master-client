@@ -8,7 +8,7 @@ const MovieCard = ({ movie }) => {
             {/* Poster */}
             <div className="relative h-80 overflow-hidden">
                 <img
-                    src={movie.poster}
+                    src={movie.posterUrl}
                     alt={movie.title}
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
                 />
@@ -33,8 +33,9 @@ const MovieCard = ({ movie }) => {
                         {movie.title}
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-300">
-                        {movie.year} • {movie.duration}
+                    <p className="mt-1 text-sm text-slate-300 flex justify-between">
+                        <span>{movie.releaseYear}</span>
+                        <span>{movie.duration} m</span>
                     </p>
                 </div>
 
@@ -42,7 +43,7 @@ const MovieCard = ({ movie }) => {
                 <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/50 opacity-0 backdrop-blur-sm transition duration-300 group-hover:opacity-100">
 
                     <Link
-                        to={`/movies/${movie.id}`}
+                        to={`/movies/${movie._id}`}
                         className="btn btn-circle bg-pink-500 text-white border-none hover:bg-pink-600"
                     >
                         <FaPlay />
@@ -68,7 +69,7 @@ const MovieCard = ({ movie }) => {
                 </div>
 
                 <Link
-                    to={`/movies/${movie.id}`}
+                    to={`/movies/${movie._id}`}
                     className="mt-4 block w-full rounded-lg bg-pink-500 py-2 text-center font-semibold text-white transition hover:bg-pink-600"
                 >
                     View Details

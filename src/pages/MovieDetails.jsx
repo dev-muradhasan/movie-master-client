@@ -9,20 +9,39 @@ import {
     FaTrash,
     FaPlus,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 const MovieDetails = () => {
+    const movie = useLoaderData();
+
+    const {
+        _id,
+        title,
+        genre,
+        releaseYear,
+        director,
+        cast,
+        rating,
+        duration,
+        plotSummary,
+        posterUrl,
+        language,
+        country,
+        addedBy,
+    } = movie;
+
     return (
         <div className="min-h-screen bg-slate-950">
 
             {/* Hero */}
             <section className="relative overflow-hidden">
 
+                {/* Background */}
                 <div className="absolute inset-0">
                     <img
-                        src="https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+                        src={posterUrl}
                         className="h-full w-full object-cover opacity-20 blur-sm"
-                        alt=""
+                        alt={title}
                     />
 
                     <div className="absolute inset-0 bg-linear-to-b from-slate-950/50 via-slate-950 to-slate-950" />
@@ -35,66 +54,70 @@ const MovieDetails = () => {
                         {/* Poster */}
                         <div>
                             <img
-                                src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+                                src={posterUrl}
                                 className="w-full rounded-2xl shadow-2xl"
-                                alt="The Dark Knight"
+                                alt={title}
                             />
                         </div>
 
                         {/* Details */}
                         <div className="flex flex-col justify-center">
 
+                            {/* Genre */}
                             <span className="w-fit rounded-full bg-pink-500 px-4 py-2 text-sm font-semibold text-white">
-                                Action
+                                {genre}
                             </span>
 
+                            {/* Title */}
                             <h1 className="mt-5 text-4xl font-black text-white md:text-6xl">
-                                The Dark Knight
+                                {title}
                             </h1>
 
+                            {/* Rating / Year / Duration */}
                             <div className="mt-5 flex flex-wrap gap-5 text-slate-300">
 
                                 <span className="flex items-center gap-2">
                                     <FaStar className="text-yellow-400" />
-                                    9.0
+                                    {rating}
                                 </span>
 
                                 <span className="flex items-center gap-2">
                                     <FaCalendar />
-                                    2008
+                                    {releaseYear}
                                 </span>
 
                                 <span className="flex items-center gap-2">
                                     <FaClock />
-                                    2h 32m
+                                    {duration} min
                                 </span>
 
                             </div>
 
+                            {/* Plot */}
                             <p className="mt-7 max-w-3xl leading-8 text-slate-400">
-                                When the menace known as the Joker wreaks havoc and chaos
-                                on the people of Gotham, Batman must accept one of the
-                                greatest psychological and physical tests of his ability
-                                to fight injustice.
+                                {plotSummary}
                             </p>
 
+                            {/* Buttons */}
                             <div className="mt-8 flex flex-wrap gap-3">
 
                                 <button className="btn border-none bg-pink-500 text-white hover:bg-pink-600">
-
                                     <FaPlus />
                                     Add to Watchlist
                                 </button>
 
-                                <Link to={'/movies/update/:id'} className="btn btn-outline border-slate-700 text-white">
+                                <Link
+                                    to={`/movies/update/${_id}`}
+                                    className="btn btn-outline border-slate-700 text-white"
+                                >
                                     <FaEdit />
                                     Edit
                                 </Link>
 
-                                <Link className="btn btn-outline border-red-500/40 text-red-400">
+                                <button className="btn btn-outline border-red-500/40 text-red-400">
                                     <FaTrash />
                                     Delete
-                                </Link>
+                                </button>
 
                             </div>
 
@@ -108,40 +131,64 @@ const MovieDetails = () => {
 
                 <div className="grid gap-6 md:grid-cols-2">
 
+                    {/* Movie Information */}
                     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
                         <h2 className="mb-6 text-xl font-bold text-white">
                             Movie Information
                         </h2>
 
                         <div className="space-y-5">
 
+                            {/* Director */}
                             <div className="flex items-center gap-4">
                                 <FaUser className="text-pink-500" />
+
                                 <div>
-                                    <p className="text-xs text-slate-500">Director</p>
-                                    <p className="text-white">Christopher Nolan</p>
+                                    <p className="text-xs text-slate-500">
+                                        Director
+                                    </p>
+
+                                    <p className="text-white">
+                                        {director}
+                                    </p>
                                 </div>
                             </div>
 
+                            {/* Language */}
                             <div className="flex items-center gap-4">
                                 <FaLanguage className="text-pink-500" />
+
                                 <div>
-                                    <p className="text-xs text-slate-500">Language</p>
-                                    <p className="text-white">English</p>
+                                    <p className="text-xs text-slate-500">
+                                        Language
+                                    </p>
+
+                                    <p className="text-white">
+                                        {language}
+                                    </p>
                                 </div>
                             </div>
 
+                            {/* Country */}
                             <div className="flex items-center gap-4">
                                 <FaGlobe className="text-pink-500" />
+
                                 <div>
-                                    <p className="text-xs text-slate-500">Country</p>
-                                    <p className="text-white">United States</p>
+                                    <p className="text-xs text-slate-500">
+                                        Country
+                                    </p>
+
+                                    <p className="text-white">
+                                        {country}
+                                    </p>
                                 </div>
                             </div>
 
                         </div>
                     </div>
 
+                    {/* Cast */}
                     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
 
                         <h2 className="mb-6 text-xl font-bold text-white">
@@ -150,18 +197,12 @@ const MovieDetails = () => {
 
                         <div className="flex flex-wrap gap-3">
 
-                            {[
-                                "Christian Bale",
-                                "Heath Ledger",
-                                "Aaron Eckhart",
-                                "Gary Oldman",
-                                "Morgan Freeman",
-                            ].map((actor) => (
+                            {cast.split(",").map((actor) => (
                                 <span
                                     key={actor}
                                     className="rounded-full border border-slate-700 bg-slate-950 px-4 py-2 text-sm text-slate-300"
                                 >
-                                    {actor}
+                                    {actor.trim()}
                                 </span>
                             ))}
 
@@ -170,7 +211,7 @@ const MovieDetails = () => {
 
                 </div>
 
-                {/* Added by */}
+                {/* Added By */}
                 <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-900 p-6">
 
                     <p className="text-sm text-slate-500">
@@ -179,19 +220,17 @@ const MovieDetails = () => {
 
                     <div className="mt-3 flex items-center gap-3">
 
-                        <img
-                            src="https://i.pravatar.cc/100?img=12"
-                            className="h-12 w-12 rounded-full"
-                            alt=""
-                        />
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-pink-500 text-lg font-bold text-white">
+                            {addedBy?.charAt(0).toUpperCase()}
+                        </div>
 
                         <div>
                             <p className="font-semibold text-white">
-                                Murad Hasan
+                                {addedBy}
                             </p>
 
                             <p className="text-sm text-slate-500">
-                                murad@example.com
+                                Movie Contributor
                             </p>
                         </div>
 

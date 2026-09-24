@@ -1,85 +1,15 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import { FaSearch, FaSlidersH, FaStar } from "react-icons/fa";
 import MovieCard from "../components/MovieCard";
+import { useLoaderData } from "react-router";
+import AuthContext from "../contexts/AuthContext";
+import Loading from "../components/Loading";
 
-const movies = [
-    {
-        id: 1,
-        title: "Interstellar",
-        genre: "Sci-Fi",
-        year: 2014,
-        rating: 8.7,
-        duration: "2h 49m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-    },
-    {
-        id: 2,
-        title: "The Dark Knight",
-        genre: "Action",
-        year: 2008,
-        rating: 9.0,
-        duration: "2h 32m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    },
-    {
-        id: 3,
-        title: "Inception",
-        genre: "Sci-Fi",
-        year: 2010,
-        rating: 8.8,
-        duration: "2h 28m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
-    },
-    {
-        id: 4,
-        title: "Joker",
-        genre: "Drama",
-        year: 2019,
-        rating: 8.4,
-        duration: "2h 2m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-    },
-    {
-        id: 5,
-        title: "Avatar",
-        genre: "Fantasy",
-        year: 2009,
-        rating: 8.1,
-        duration: "2h 42m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
-    },
-    {
-        id: 6,
-        title: "Avengers",
-        genre: "Action",
-        year: 2012,
-        rating: 8.0,
-        duration: "2h 23m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
-    },
-];
 
 const Movies = () => {
+    const {loading} = use(AuthContext);
+    const allMovies = useLoaderData();
     const [filterOpen, setFilterOpen] = useState(false);
-
     return (
         <div className="min-h-screen">
 
@@ -203,7 +133,7 @@ const Movies = () => {
 
                 <div className="mb-7 flex items-center justify-between">
                     <p className="text-slate-400">
-                        Showing <span className="font-bold text-white">1250</span> movies
+                        Showing <span className="font-bold text-white">{allMovies.length}</span> movies
                     </p>
 
                     <div className="flex items-center gap-2 text-yellow-400">
@@ -214,15 +144,19 @@ const Movies = () => {
                     </div>
                 </div>
 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    {movies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
+                {loading ? <Loading></Loading> : <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    {allMovies.map((movie) => (
+                        <MovieCard key={movie._id} movie={movie} />
                     ))}
-                </div>
-
+                </div> }
+               
+                
             </section>
         </div>
     );
 };
 
 export default Movies;
+
+
+

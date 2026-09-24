@@ -14,11 +14,13 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import ErrorPage from "../pages/ErrorPage";
 import PrivateRoutes from "./PrivateRoutes";
+import Loading from "../components/Loading";
 
 const router = createBrowserRouter([
     {
         path: "/",
         Component: MainLayout,
+        hydrateFallbackElement: <Loading></Loading>,
         errorElement: <ErrorPage />,
 
         children: [
@@ -29,12 +31,14 @@ const router = createBrowserRouter([
 
             {
                 path: "/movies",
+                loader: () => fetch('http://localhost:3000/movies'),
                 Component: Movies,
             },
 
             // PUBLIC
             {
                 path: "/movies/:id",
+                loader: ({ params }) => fetch(`http://localhost:3000/movies/${params.id}`),
                 Component: MovieDetails,
             },
 

@@ -5,137 +5,24 @@ import { Link } from "react-router";
 import MovieCard from "../components/MovieCard";
 import SectionTitle from "../components/SectionTitle";
 import Hero from "../components/Hero";
+import { use } from "react";
+import AuthContext from "../contexts/AuthContext";
+import Loading from "../components/Loading";
 
-const movies = [
-    {
-        id: 1,
-        title: "Interstellar",
-        genre: "Sci-Fi",
-        year: 2014,
-        rating: 8.7,
-        duration: "2h 49m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
-    },
-    {
-        id: 2,
-        title: "The Dark Knight",
-        genre: "Action",
-        year: 2008,
-        rating: 9.0,
-        duration: "2h 32m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    },
-    {
-        id: 3,
-        title: "Inception",
-        genre: "Sci-Fi",
-        year: 2010,
-        rating: 8.8,
-        duration: "2h 28m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
-    },
-    {
-        id: 4,
-        title: "Avatar",
-        genre: "Fantasy",
-        year: 2009,
-        rating: 8.1,
-        duration: "2h 42m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
-    },
-    {
-        id: 5,
-        title: "Avengers",
-        genre: "Action",
-        year: 2012,
-        rating: 8.0,
-        duration: "2h 23m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg",
-    },
-    {
-        id: 6,
-        title: "Joker",
-        genre: "Drama",
-        year: 2019,
-        rating: 8.4,
-        duration: "2h 2m",
-        language: "English",
-        country: "USA",
-        poster:
-            "https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-    },
-];
+
+const latestMoviesPromise = fetch('http://localhost:3000/latest-movies').then(res=>res.json())
+const topMoviesPromise = fetch('http://localhost:3000/top-movies').then(res=>res.json())
 
 const Home = () => {
+    const {loading} = use(AuthContext)
+    const topMovies = use(topMoviesPromise);
+    const latestMovies = use(latestMoviesPromise);
+
+
     return (
         <div>
 
             {/* Hero */}
-            {/* <section className="relative min-h-162.5 overflow-hidden">
-
-                <img
-                    src="https://image.tmdb.org/t/p/original/6LFc5x2b6N9p5dKQ9fVQjKf9X.jpg"
-                    alt="hero"
-                    className="absolute inset-0 h-full w-full object-cover"
-                />
-
-                <div className="absolute inset-0 bg-linear-to-r from-slate-950 via-slate-950/90 to-transparent" />
-
-                <div className="relative mx-auto flex min-h-162.5 max-w-7xl items-center px-4">
-
-                    <div className="max-w-2xl">
-
-                        <span className="mb-5 inline-block rounded-full bg-pink-500/20 px-4 py-2 text-sm font-semibold text-pink-400">
-                            FEATURED MOVIE
-                        </span>
-
-                        <h1 className="text-5xl font-black leading-tight text-white md:text-7xl">
-                            Discover Your
-                            <span className="block text-pink-500">
-                                Next Favorite
-                            </span>
-                            Movie
-                        </h1>
-
-                        <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
-                            Explore thousands of movies, build your personal
-                            collection and keep track of everything you love watching.
-                        </p>
-
-                        <div className="mt-8 flex flex-wrap gap-4">
-
-                            <Link
-                                to="/movies"
-                                className="btn border-none bg-pink-500 px-7 text-white hover:bg-pink-600"
-                            >
-                                Explore Movies
-                                <FaArrowRight />
-                            </Link>
-
-                            <button className="btn btn-outline border-white/30 px-7 text-white hover:bg-white hover:text-slate-950">
-                                <FaPlay />
-                                Watch Trailer
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            </section> */}
             <Hero></Hero>
 
             {/* Stats */}
@@ -165,11 +52,11 @@ const Home = () => {
                     subtitle="Explore the highest rated movies loved by our community."
                 />
 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {movies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
+                {loading ? <Loading></Loading> : <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {topMovies.map((movie) => (
+                        <MovieCard key={movie._id} movie={movie} />
                     ))}
-                </div>
+                </div>}
 
             </section>
 
@@ -182,13 +69,12 @@ const Home = () => {
                         title="Latest Movies"
                         subtitle="Freshly added movies waiting for you."
                     />
-
-                    <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-                        {movies.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
+                    {loading ? <Loading></Loading> : <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+                        {latestMovies.map((movie) => (
+                            <MovieCard key={movie._id} movie={movie} />
                         ))}
-                    </div>
-
+                    </div>}
+                    
                 </div>
 
             </section>
