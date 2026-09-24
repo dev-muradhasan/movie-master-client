@@ -1,12 +1,12 @@
 import { use } from "react";
-import { FaGoogle, FaFilm, FaUser, FaEnvelope, FaCamera, FaLock } from "react-icons/fa";
+import { FaGoogle, FaUser, FaEnvelope, FaCamera, FaLock } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import AuthContext from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 
 const Register = () => {
     const navigate = useNavigate();
-    const { createUser, updateProfileFunc } = use(AuthContext);
+    const { createUser, updateProfileFunc, googleSignIn, setLoading, setUser } = use(AuthContext);
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -17,9 +17,7 @@ const Register = () => {
         const password = e.target.password.value;
 
         createUser(email, password)
-            .then((res) => {
-                console.log(res.user);
-
+            .then(() => {
                 updateProfileFunc(displayName, photoURL)
                     .then(() => {
                         toast.success(
@@ -49,6 +47,20 @@ const Register = () => {
                 }
             });
     };
+
+    const handleGoogleSignIn = () =>{
+        googleSignIn()
+        .then(res=>{
+            setLoading(false)
+            navigate('/')
+            toast.success("Sign In Successful!");
+            setUser(res.user)
+        }).catch(err=>{
+            setLoading(false)
+            toast.error(err.message)
+            console.log(err.message);
+        })
+    }
 
     return (
         <div className="min-h-screen bg-slate-950 px-4 py-10">
@@ -248,6 +260,7 @@ const Register = () => {
 
                         {/* Google */}
                         <button
+                            onClick={handleGoogleSignIn}
                             type="button"
                             className="btn h-12 w-full border border-slate-700 bg-slate-950 text-white transition hover:border-slate-600 hover:bg-slate-800"
                         >

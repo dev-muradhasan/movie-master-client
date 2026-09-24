@@ -8,7 +8,7 @@ const Login = () => {
     const location = useLocation();
     const from = location.state || '/';
     const navigate = useNavigate();
-    const { signInUserWithEmailPass, setUser ,setLoading} = use(AuthContext)
+    const { signInUserWithEmailPass, setUser, setLoading, googleSignIn } = use(AuthContext)
 
     const handleSignIn = (e) => {
         e.preventDefault();
@@ -24,9 +24,24 @@ const Login = () => {
                 console.log(res.user);
             })
             .catch((err) => {
+                setLoading(false)
                 console.log(err);
                 toast.error(err.message);
             });
+    }
+
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(res => {
+                setLoading(false)
+                navigate(from)
+                toast.success("Sign In Successful!");
+                setUser(res.user)
+            }).catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+                console.log(err.message);
+            })
     }
 
     return (
@@ -163,6 +178,7 @@ const Login = () => {
 
                         {/* Google */}
                         <button
+                            onClick={handleGoogleSignIn}
                             type="button"
                             className="btn h-12 w-full border border-slate-700 bg-slate-950 text-white transition hover:border-slate-600 hover:bg-slate-800"
                         >

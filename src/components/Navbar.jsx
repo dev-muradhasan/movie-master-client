@@ -8,6 +8,7 @@ import {
     FaSun,
     FaSignOutAlt,
     FaUser,
+    FaPlus,
 } from "react-icons/fa";
 import AuthContext from "../contexts/AuthContext";
 
@@ -237,6 +238,15 @@ const Navbar = () => {
                                             <FaUser />
                                             Watchlist
                                         </Link>
+                                        <Link
+                                            to="/movies/add"
+                                            onClick={() => setProfileOpen(false)}
+                                            className="flex items-center gap-3 px-4 py-3 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-pink-400"
+                                        >
+                                             <FaPlus />
+                                            Add Movie
+                                        </Link>
+
 
 
                                         {/* Logout */}
