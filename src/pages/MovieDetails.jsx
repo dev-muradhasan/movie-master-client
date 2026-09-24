@@ -9,6 +9,7 @@ import {
     FaTrash,
     FaPlus,
 } from "react-icons/fa";
+import { Link } from "react-router";
 
 const MovieDetails = () => {
     return (
@@ -80,19 +81,20 @@ const MovieDetails = () => {
                             <div className="mt-8 flex flex-wrap gap-3">
 
                                 <button className="btn border-none bg-pink-500 text-white hover:bg-pink-600">
+
                                     <FaPlus />
                                     Add to Watchlist
                                 </button>
 
-                                <button className="btn btn-outline border-slate-700 text-white">
+                                <Link to={'/movies/update/:id'} className="btn btn-outline border-slate-700 text-white">
                                     <FaEdit />
                                     Edit
-                                </button>
+                                </Link>
 
-                                <button className="btn btn-outline border-red-500/40 text-red-400">
+                                <Link className="btn btn-outline border-red-500/40 text-red-400">
                                     <FaTrash />
                                     Delete
-                                </button>
+                                </Link>
 
                             </div>
 
