@@ -9,60 +9,77 @@ import {
     FaChevronRight,
 } from "react-icons/fa";
 
-const featuredMovies = [
-    {
-        id: 1,
-        title: "The Dark Knight",
-        genre: "Action",
-        year: 2008,
-        rating: 9.0,
-        duration: "2h 32m",
-        description:
-            "When a dangerous criminal threatens Gotham City, Batman must face one of his greatest challenges.",
-        image:
-            "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-    },
-    {
-        id: 2,
-        title: "Interstellar",
-        genre: "Sci-Fi",
-        year: 2014,
-        rating: 8.7,
-        duration: "2h 49m",
-        description:
-            "A team of explorers travels through a mysterious wormhole in search of a new home for humanity.",
-        image:
-            "https://image.tmdb.org/t/p/original/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
-    },
-    {
-        id: 3,
-        title: "Inception",
-        genre: "Thriller",
-        year: 2010,
-        rating: 8.8,
-        duration: "2h 28m",
-        description:
-            "A skilled thief who steals secrets through dreams receives a mission that could change everything.",
-        image:
-            "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
-    },
-    {
-        id: 4,
-        title: "Avengers: Endgame",
-        genre: "Action",
-        year: 2019,
-        rating: 8.4,
-        duration: "3h 1m",
-        description:
-            "The Avengers assemble once again for their final battle to restore what was lost.",
-        image:
-            "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
-    },
-];
+// const featuredMovies = [
+//     {
+//         id: 1,
+//         title: "The Dark Knight",
+//         genre: "Action",
+//         year: 2008,
+//         rating: 9.0,
+//         duration: "2h 32m",
+//         description:
+//             "When a dangerous criminal threatens Gotham City, Batman must face one of his greatest challenges.",
+//         image:
+//             "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+//     },
+//     {
+//         id: 2,
+//         title: "Interstellar",
+//         genre: "Sci-Fi",
+//         year: 2014,
+//         rating: 8.7,
+//         duration: "2h 49m",
+//         description:
+//             "A team of explorers travels through a mysterious wormhole in search of a new home for humanity.",
+//         image:
+//             "https://image.tmdb.org/t/p/original/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
+//     },
+//     {
+//         id: 3,
+//         title: "Inception",
+//         genre: "Thriller",
+//         year: 2010,
+//         rating: 8.8,
+//         duration: "2h 28m",
+//         description:
+//             "A skilled thief who steals secrets through dreams receives a mission that could change everything.",
+//         image:
+//             "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+//     },
+//     {
+//         id: 4,
+//         title: "Avengers: Endgame",
+//         genre: "Action",
+//         year: 2019,
+//         rating: 8.4,
+//         duration: "3h 1m",
+//         description:
+//             "The Avengers assemble once again for their final battle to restore what was lost.",
+//         image:
+//             "https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+//     },
+// ];
 
 const Hero = () => {
+    const [featuredMovies, setFeaturedMovies] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(1);
+    const [loading, setLoading] = useState(true)
+
+    
+    useEffect(() => {
+        fetch("http://localhost:3000/movies")
+        .then((res) => res.json())
+        .then((data) => {
+            setFeaturedMovies(data);
+            setLoading(false);
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error(error);
+            setLoading(false);
+        });
+    }, []);
 
     const movie = featuredMovies[currentIndex];
 
@@ -77,7 +94,8 @@ const Hero = () => {
         }, 5000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [featuredMovies.length]);
+  
 
     // Next
     const nextMovie = () => {
@@ -100,6 +118,22 @@ const Hero = () => {
         });
     };
 
+    if (loading) {
+        return (
+            <section className="relative flex h-124 items-center justify-center overflow-hidden bg-slate-950">
+                <span className="loading loading-spinner loading-lg text-pink-500"></span>
+            </section>
+        );
+    }
+
+    if (featuredMovies.length === 0) {
+        return (
+            <section className="relative flex h-124 items-center justify-center overflow-hidden bg-slate-950">
+                <p className="text-lg text-slate-400">No movies found.</p>
+            </section>
+        );
+    }
+
     return (
         <main>
 
@@ -109,8 +143,8 @@ const Hero = () => {
                 {/* Background Image */}
                 <AnimatePresence mode="wait">
                     <motion.img
-                        key={movie.id}
-                        src={movie.image}
+                        key={movie._id}
+                        src={movie.posterUrl}
                         alt={movie.title}
                         initial={{
                             opacity: 0,
@@ -143,7 +177,7 @@ const Hero = () => {
 
                     <AnimatePresence mode="wait" custom={direction}>
                         <motion.div
-                            key={movie.id}
+                            key={movie._id}
                             custom={direction}
                             initial={{
                                 opacity: 0,
@@ -164,13 +198,13 @@ const Hero = () => {
                             className="max-w-2xl"
                         >
 
-                            {/* Badge */}
-                            <span className="mb-5 inline-block rounded-full bg-pink-500/20 px-4 py-2 text-sm font-semibold text-pink-400 backdrop-blur-sm">
+                            
+                            <span className="mb-3 inline-block rounded-full bg-pink-500/20 px-4 py-2 text-sm font-semibold text-pink-400 backdrop-blur-sm">
                                 FEATURED MOVIE
                             </span>
 
                             {/* Title */}
-                            <h1 className="text-5xl font-black leading-tight text-white md:text-7xl">
+                            <h1 className="text-4xl font-black leading-tight text-white md:text-6xl">
                                 {movie.title}
                             </h1>
 
@@ -187,7 +221,7 @@ const Hero = () => {
 
                                 {/* Year */}
                                 <span className="text-slate-300">
-                                    {movie.year}
+                                    {movie.releaseYear}
                                 </span>
 
                                 {/* Duration */}
@@ -203,15 +237,15 @@ const Hero = () => {
                             </div>
 
                             {/* Description */}
-                            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-300">
-                                {movie.description}
+                            <p className="mt-6 max-w-xl text-lg line-clamp-2 leading-8 text-slate-300">
+                                {movie.plotSummary}
                             </p>
 
                             {/* Buttons */}
                             <div className="mt-8 flex flex-wrap gap-4">
 
                                 <Link
-                                    to={`/movies/${movie.id}`}
+                                    to={`/movies/${movie._id}`}
                                     className="btn border-none bg-pink-500 px-7 text-white hover:bg-pink-600"
                                 >
                                     View Details
@@ -246,7 +280,7 @@ const Hero = () => {
 
                         {featuredMovies.map((item, index) => (
                             <button
-                                key={item.id}
+                                key={item._id}
                                 onClick={() => {
                                     setDirection(
                                         index > currentIndex ? 1 : -1
