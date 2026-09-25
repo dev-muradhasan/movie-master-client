@@ -19,7 +19,7 @@ const UpdateMovie = () => {
 
     // Get movie data
     useEffect(() => {
-        fetch(`http://localhost:3000/movies/${id}`)
+        fetch(`${import.meta.env.VITE_API_URL}/movies/${id}`)
             .then(res => res.json())
             .then(data => {
                 setMovie(data);
@@ -63,7 +63,7 @@ const UpdateMovie = () => {
                 plotSummary: form.plotSummary.value,
             };
             const response = await fetch(
-                `http://localhost:3000/movies/${id}`,
+                `${import.meta.env.VITE_API_URL}/movies/${id}`,
                 {
                     method: "PATCH",
                     headers: {

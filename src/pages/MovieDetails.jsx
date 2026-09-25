@@ -1,3 +1,4 @@
+import { use } from "react";
 import {
     FaStar,
     FaClock,
@@ -10,8 +11,11 @@ import {
     FaPlus,
 } from "react-icons/fa";
 import { Link, useLoaderData } from "react-router";
+import { toast } from "react-toastify";
+import AuthContext from "../contexts/AuthContext";
 
 const MovieDetails = () => {
+    const {user} = use(AuthContext)
     const movie = useLoaderData();
 
     const {
@@ -29,6 +33,26 @@ const MovieDetails = () => {
         country,
         addedBy,
     } = movie;
+
+    const handleAddToWatchlist = async () => {
+        const watchlistMovie = {
+            movieId: movie._id,
+            addedBy: user.email,
+        };
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/watchlist`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(watchlistMovie),
+        });
+        const data = await response.json();
+        if (response.ok) {
+            toast.success("Added to watchlist!");
+        } else {
+            toast.error(data.message || "Failed to add!");
+        }
+    };
 
     return (
         <div className="min-h-screen bg-slate-950">
@@ -101,7 +125,7 @@ const MovieDetails = () => {
                             {/* Buttons */}
                             <div className="mt-8 flex flex-wrap gap-3">
 
-                                <button className="btn border-none bg-pink-500 text-white hover:bg-pink-600">
+                                <button onClick={handleAddToWatchlist} className="btn border-none bg-pink-500 text-white hover:bg-pink-600">
                                     <FaPlus />
                                     Add to Watchlist
                                 </button>

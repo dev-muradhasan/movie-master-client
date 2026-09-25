@@ -68,12 +68,11 @@ const Hero = () => {
 
     
     useEffect(() => {
-        fetch("http://localhost:3000/movies")
+        fetch(`${import.meta.env.VITE_API_URL}/movies`)
         .then((res) => res.json())
         .then((data) => {
             setFeaturedMovies(data);
             setLoading(false);
-            console.log(data);
         })
         .catch((error) => {
             console.error(error);

@@ -55,7 +55,7 @@ const AddMovie = () => {
 
             // Send movie data to backend
             const response = await fetch(
-                `http://localhost:3000/movies`,
+                `${import.meta.env.VITE_API_URL}/movies`,
                 {
                     method: "POST",
                     headers: {

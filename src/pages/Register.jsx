@@ -25,7 +25,7 @@ const Register = () => {
                             email: email,
                             photoURL: photoURL
                         };
-                        await fetch(`http://localhost:3000/users`, {
+                        await fetch(`${import.meta.env.VITE_API_URL}/users`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
@@ -69,7 +69,7 @@ const Register = () => {
                 email: user.email,
                 photoURL: user.photoURL
             };
-            await fetch(`http://localhost:3000/users`, {
+            await fetch(`${import.meta.env.VITE_API_URL}/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

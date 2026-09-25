@@ -10,8 +10,8 @@ import AuthContext from "../contexts/AuthContext";
 import Loading from "../components/Loading";
 
 
-const latestMoviesPromise = fetch('http://localhost:3000/latest-movies').then(res=>res.json())
-const topMoviesPromise = fetch('http://localhost:3000/top-movies').then(res=>res.json())
+const latestMoviesPromise = fetch(`${import.meta.env.VITE_API_URL}/latest-movies`).then(res=>res.json())
+const topMoviesPromise = fetch(`${import.meta.env.VITE_API_URL}/top-movies`).then(res=>res.json())
 
 const Home = () => {
     const {loading} = use(AuthContext)
@@ -24,7 +24,7 @@ const Home = () => {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:3000/statistics`)
+        fetch(`${import.meta.env.VITE_API_URL}/statistics`)
             .then(res => res.json())
             .then(data => {
                 setStatistics(data);

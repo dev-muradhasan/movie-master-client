@@ -31,14 +31,14 @@ const router = createBrowserRouter([
 
             {
                 path: "/movies",
-                loader: () => fetch('http://localhost:3000/movies'),
+                loader: () => fetch(`${import.meta.env.VITE_API_URL}/movies`),
                 Component: Movies,
             },
 
             // PUBLIC
             {
                 path: "/movies/:id",
-                loader: ({ params }) => fetch(`http://localhost:3000/movies/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/${params.id}`),
                 Component: MovieDetails,
             },
 
