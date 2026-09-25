@@ -64,7 +64,7 @@ const Login = () => {
                 {/* LEFT IMAGE */}
                 <div className="relative hidden w-1/2 lg:block">
                     <img
-                        src="https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg"
+                        src="https://res.cloudinary.com/hy4urdfq/image/upload/v1790365779/qJ2tW6WMUDux911r6m7haRef0WH_z8crzd.jpg"
                         alt="The Dark Knight"
                         className="absolute inset-0 h-full w-full object-cover"
                     />

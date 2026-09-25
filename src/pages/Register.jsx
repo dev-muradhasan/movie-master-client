@@ -96,7 +96,7 @@ const Register = () => {
                 <div className="relative hidden w-1/2 lg:block">
 
                     <img
-                        src="https://res.cloudinary.com/iw6hgjqb/image/upload/f_auto/q_auto/rvmkzdzuzxla0qg82zsa"
+                        src="https://res.cloudinary.com/hy4urdfq/image/upload/v1790333378/l5irwiccqtbo68zsrk2e.webp"
                         alt="Movie theater"
                         className="absolute inset-0 h-full w-full object-cover"
                     />
