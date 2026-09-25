@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import MovieCard from "../components/MovieCard";
 import SectionTitle from "../components/SectionTitle";
 import Hero from "../components/Hero";
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 import Loading from "../components/Loading";
 
@@ -18,6 +18,21 @@ const Home = () => {
     const topMovies = use(topMoviesPromise);
     const latestMovies = use(latestMoviesPromise);
 
+    const [statistics, setStatistics] = useState({
+        totalMovies: 0,
+        totalUsers: 0
+    });
+
+    useEffect(() => {
+        fetch(`http://localhost:3000/statistics`)
+            .then(res => res.json())
+            .then(data => {
+                setStatistics(data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <div>
@@ -31,13 +46,13 @@ const Home = () => {
 
                     <div className="border-r border-slate-800 p-8 text-center">
                         <FaFilm className="mx-auto mb-3 text-3xl text-pink-500" />
-                        <h3 className="text-3xl font-bold text-white">1,250+</h3>
+                        <h3 className="text-3xl font-bold text-white">{statistics.totalMovies}+</h3>
                         <p className="mt-1 text-slate-400">Movies</p>
                     </div>
 
                     <div className="border-r border-slate-800 p-8 text-center">
                         <FaUsers className="mx-auto mb-3 text-3xl text-cyan-400" />
-                        <h3 className="text-3xl font-bold text-white">8,500+</h3>
+                        <h3 className="text-3xl font-bold text-white">{statistics.totalUsers}+</h3>
                         <p className="mt-1 text-slate-400">Users</p>
                     </div>
 

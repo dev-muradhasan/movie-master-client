@@ -32,11 +32,24 @@ const Login = () => {
 
     const handleGoogleSignIn = () => {
         googleSignIn()
-            .then(res => {
+            .then(async (result) => {
+                const user = result.user;
+                const userData = {
+                    name: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL
+                };
+                await fetch(`http://localhost:3000/users`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                });
                 setLoading(false)
                 navigate(from)
                 toast.success("Sign In Successful!");
-                setUser(res.user)
+                setUser(result.user)
             }).catch(err => {
                 setLoading(false)
                 toast.error(err.message)
