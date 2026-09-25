@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import ScrollTop from "../components/ScrollTop";
 
 
 const MainLayout = () => {
@@ -8,6 +9,7 @@ const MainLayout = () => {
         <div className="flex flex-col min-h-screen text-white">
             <Navbar></Navbar>
             <div className="flex-1">
+                <ScrollTop></ScrollTop>
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
@@ -16,3 +18,4 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
+
