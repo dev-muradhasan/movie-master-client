@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             // PUBLIC
             {
                 path: "/movies/:id",
-                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/${params.id}`),
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL}/movies/${params.id}`),
                 Component: MovieDetails,
             },
 
